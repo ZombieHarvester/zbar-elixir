@@ -128,6 +128,8 @@ defmodule Zbar do
 
         "data" ->
           %Symbol{acc | data: Base.decode64!(value)}
+
+        _ -> acc
       end
     end)
   end
