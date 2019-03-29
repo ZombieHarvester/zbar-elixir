@@ -115,22 +115,26 @@ defmodule Zbar do
     string
     |> String.split(" ")
     |> Enum.reduce(%Symbol{}, fn item, acc ->
-      [key, value] = String.split(item, ":", parts: 2)
-      case key do
-        "type" ->
-          %Symbol{acc | type: parse_type(value)}
+        case String.split(item, ":", parts: 2) do
+          [key, value] ->
+            case key do
+              "type" ->
+                %Symbol{acc | type: parse_type(value)}
 
-        "quality" ->
-          %Symbol{acc | quality: String.to_integer(value)}
+              "quality" ->
+                %Symbol{acc | quality: String.to_integer(value)}
 
-        "points" ->
-          %Symbol{acc | points: parse_points(value)}
+              "points" ->
+                %Symbol{acc | points: parse_points(value)}
 
-        "data" ->
-          %Symbol{acc | data: Base.decode64!(value)}
+              "data" ->
+                %Symbol{acc | data: Base.decode64!(value)}
 
-        _ -> acc
-      end
+              _ -> acc
+            end
+
+          _ -> acc
+        end
     end)
   end
 
